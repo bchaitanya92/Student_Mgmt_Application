@@ -3,14 +3,139 @@
 {% block title %}Home - Student Management System{% endblock %}
 
 {% block content %}
-<div style="text-align: center;">
-    <h2>Welcome to Student Management System</h2>
-    <p>Choose an option from the navigation menu above to:</p>
-    <ul style="list-style: none; padding: 0;">
-        <li>➕ Add new students</li>
-        <li>📋 View all students</li>
-        <li>✏️ Edit student information</li>
-        <li>❌ Delete students</li>
-    </ul>
+<div class="home-container">
+    <div class="welcome-section">
+        <i class="fas fa-graduation-cap fa-4x"></i>
+        <h2>Welcome to Student Management System</h2>
+        <p>Manage your students' information with ease</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <i class="fas fa-user-plus fa-2x"></i>
+            <h3>Add Students</h3>
+            <p>Add new students to the system with their details</p>
+            <a href="{{ url_for('add_student_page') }}" class="feature-link">
+                Add Now <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="feature-card">
+            <i class="fas fa-list fa-2x"></i>
+            <h3>View Students</h3>
+            <p>View and manage all registered students</p>
+            <a href="{{ url_for('list_students_page') }}" class="feature-link">
+                View List <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="feature-card">
+            <i class="fas fa-edit fa-2x"></i>
+            <h3>Update Records</h3>
+            <p>Modify existing student information</p>
+            <a href="{{ url_for('list_students_page') }}" class="feature-link">
+                Update Now <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="feature-card">
+            <i class="fas fa-trash-alt fa-2x"></i>
+            <h3>Remove Students</h3>
+            <p>Remove students from the system</p>
+            <a href="{{ url_for('list_students_page') }}" class="feature-link">
+                Manage <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
+
+<style>
+.home-container {
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.welcome-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section i {
+    margin-bottom: 1rem;
+}
+
+.welcome-section h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card i {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.feature-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.3s ease;
+}
+
+.feature-link:hover {
+    gap: 0.8rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
 {% endblock %} 
