@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Add Student - Student Management System{% endblock %}
+
+{% block content %}
+<h2>Add New Student</h2>
+<form id="addStudentForm">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required min="1" max="120">
+    </div>
+    <div class="form-group">
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" required>
+    </div>
+    <button type="submit">Add Student</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('addStudentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const data = {
+        name: document.getElementById('name').value,
+        age: parseInt(document.getElementById('age').value),
+        course: document.getElementById('course').value
+    };
+
+    fetch('/student/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Student added successfully!');
+        window.location.href = "{{ url_for('list_students_page') }}";
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error adding student. Please try again.');
+    });
+});
+</script>
+{% endblock %} 

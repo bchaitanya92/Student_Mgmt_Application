@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}List Students - Student Management System{% endblock %}
+
+{% block content %}
+<h2>Student List</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Course</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="studentList">
+    </tbody>
+</table>
+
+<!-- Edit Student Modal -->
+<div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+    <div style="background: white; padding: 20px; border-radius: 5px; width: 400px; margin: 100px auto;">
+        <h3>Edit Student</h3>
+        <form id="editStudentForm">
+            <input type="hidden" id="editStudentId">
+            <div class="form-group">
+                <label for="editName">Name:</label>
+                <input type="text" id="editName" required>
+            </div>
+            <div class="form-group">
+                <label for="editAge">Age:</label>
+                <input type="number" id="editAge" required min="1" max="120">
+            </div>
+            <div class="form-group">
+                <label for="editCourse">Course:</label>
+                <input type="text" id="editCourse" required>
+            </div>
+            <button type="submit">Update</button>
+            <button type="button" onclick="closeEditModal()" style="background-color: #f44336;">Cancel</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function loadStudents() {
+    fetch('/student/lists')
+        .then(response => response.json())
+        .then(students => {
+            const tbody = document.getElementById('studentList');
+            tbody.innerHTML = '';
+            students.forEach(student => {
+                const row = `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>${student.age}</td>
+                        <td>${student.course}</td>
+                        <td class="action-buttons">
+                            <button class="edit" onclick="openEditModal(${student.id})">Edit</button>
+                            <button class="delete" onclick="deleteStudent(${student.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function openEditModal(id) {
+    fetch(`/student/get/${id}`)
+        .then(response => response.json())
+        .then(student => {
+            document.getElementById('editStudentId').value = student.id;
+            document.getElementById('editName').value = student.name;
+            document.getElementById('editAge').value = student.age;
+            document.getElementById('editCourse').value = student.course;
+            document.getElementById('editModal').style.display = 'block';
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+document.getElementById('editStudentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const id = document.getElementById('editStudentId').value;
+    const data = {
+        name: document.getElementById('editName').value,
+        age: parseInt(document.getElementById('editAge').value),
+        course: document.getElementById('editCourse').value
+    };
+
+    fetch(`/student/update/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(() => {
+        closeEditModal();
+        loadStudents();
+        alert('Student updated successfully!');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating student. Please try again.');
+    });
+});
+
+function deleteStudent(id) {
+    if (confirm('Are you sure you want to delete this student?')) {
+        fetch(`/student/delete/${id}`, {
+            method: 'DELETE'
+        })
+        .then(() => {
+            loadStudents();
+            alert('Student deleted successfully!');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting student. Please try again.');
+        });
+    }
+}
+
+// Load students when page loads
+document.addEventListener('DOMContentLoaded', loadStudents);
+</script>
+{% endblock %} 
