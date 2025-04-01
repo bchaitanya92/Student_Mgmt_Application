@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Student Management System
 
 A Flask-based web application for managing student information. This application provides a complete CRUD (Create, Read, Update, Delete) interface for student records.
@@ -85,3 +86,6 @@ Feel free to fork this repository and submit pull requests to contribute to this
 ## License
 
 This project is licensed under the MIT License. 
+=======
+# Student_Mgmt_app
+>>>>>>> 8778ee55a5bd16e1e8ff804291c8f4d718a3fe3a
