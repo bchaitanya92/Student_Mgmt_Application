@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: myapp
+    plan: free
+    env: python
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: 
+     gunicorn app:app
+    branch: main
+    autodeploy: false
