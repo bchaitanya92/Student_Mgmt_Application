@@ -124,7 +124,6 @@ Student_Mgmt_app/
 
 Developed by:  
 **B. Chaitanya**  
-Data Science & Machine Learning
 
 - GitHub: [bchaitanya92](https://github.com/bchaitanya92)
 - LinkedIn: [BOURISETTI CHAITANYA](https://www.linkedin.com/in/bourisetti-chaitanya/)
